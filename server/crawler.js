@@ -40,7 +40,7 @@ var firebase = require('firebase/app')
 
 const app = express()
 
-const port = process.env.port || 3333
+const port = process.env.PORT || 3333
 
 app.use(bodyParser.json())
 app.use(cors())
