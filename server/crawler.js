@@ -172,16 +172,33 @@ async function crawl(clientDoc) {
                 console.log("\t\t\tTHIS IS THE PATH NAME:" + pathname + ":")
 
                 //update in firebase
-                var data = clientDoc.data()
-                var pages = data.Pages
-                pages[pathname] = body
-                clientDoc.ref.update({
-                    Pages: pages
-                }).then (function() {
-                    console.log("\t\t\t" + nextPage + " was updated..")
-                }).catch(err => {
-                    console.log("\t\t\tERROR UPDATING")
-                })
+                var id = clientDoc.id
+
+                db.runTransaction(function(transaction) {
+                    // This code may get re-run multiple times if there are conflicts.
+                    return transaction.get(clientDoc).then(function(doc) {
+                        if (!doc.exists) {
+                            throw "Document does not exist!";
+                        }
+                        var pages = doc.data().Pages
+                        pages[pathname] = body
+                        transaction.update(clientDoc, { Pages: pages });
+                    });
+                }).then(function() {
+                    console.log("\t\t\t" + nextPage + " was updated..");
+                }).catch(function(error) {
+                    console.log("\t\t\tERROR UPDATING");
+                });
+                // var data = clientDoc.data()
+                // var pages = data.Pages
+                // pages[pathname] = body
+                // clientDoc.ref.update({
+                //     Pages: pages
+                // }).then (function() {
+                //     console.log("\t\t\t" + nextPage + " was updated..")
+                // }).catch(err => {
+                //     console.log("\t\t\tERROR UPDATING")
+                // })
 
                 //console.log("reached end")
                 crawl(clientDoc)
