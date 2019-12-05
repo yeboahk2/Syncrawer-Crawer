@@ -176,13 +176,13 @@ async function crawl(clientDoc) {
 
                 db.runTransaction(function(transaction) {
                     // This code may get re-run multiple times if there are conflicts.
-                    return transaction.get(clientDoc).then(function(doc) {
+                    return transaction.get(clientDoc.ref).then(function(doc) {
                         if (!doc.exists) {
                             throw "Document does not exist!";
                         }
                         var pages = doc.data().Pages
                         pages[pathname] = body
-                        transaction.update(clientDoc.ref, { Pages: pages });
+                        transaction.update(clientDoc, { Pages: pages });
                     });
                 }).then(function() {
                     console.log("\t\t\t" + nextPage + " was updated..");
