@@ -172,10 +172,11 @@ async function crawl(clientDoc) {
                 console.log("\t\t\tTHIS IS THE PATH NAME:" + pathname + ":")
 
                 //update in firebase
+                var data = clientDoc.data()
+                var pages = data.Pages
+                pages[pathname] = body
                 clientDoc.ref.update({
-                    Pages: {
-                        [pathname]: body
-                    }
+                    Pages: pages
                 }).then (function() {
                     console.log("\t\t\t" + nextPage + " was updated..")
                 }).catch(err => {
