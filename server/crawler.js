@@ -187,7 +187,7 @@ async function crawl(clientDoc) {
                 }).then(function() {
                     console.log("\t\t\t" + nextPage + " was updated..");
                 }).catch(function(error) {
-                    console.log("\t\t\tERROR UPDATING");
+                    console.log("\t\t\tERROR UPDATING", error);
                 });
                 // var data = clientDoc.data()
                 // var pages = data.Pages
