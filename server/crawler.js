@@ -182,7 +182,7 @@ async function crawl(clientDoc) {
                         }
                         var pages = doc.data().Pages
                         pages[pathname] = body
-                        transaction.update(clientDoc, { Pages: pages });
+                        transaction.update(clientDoc.ref, { Pages: pages });
                     });
                 }).then(function() {
                     console.log("\t\t\t" + nextPage + " was updated..");
