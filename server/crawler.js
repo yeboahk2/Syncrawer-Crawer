@@ -70,7 +70,7 @@ app.post('/new-client', async function (req, res) {
     }).then(docRef => {
         console.log("created new clientDoc with id: ", docRef.id)
         res.status(200)
-        res.send(`<script id="syncrawler" src="http://localhost:3030/search" clientid="${docRef.id}"></script>`)
+        res.send(`<script id="syncrawler" src="https://syncrawler-server.herokuapp.com/search" clientid="${docRef.id}"></script>`)
     }).catch(error => {
         console.log("error: ", error)
         res.status(400)
@@ -166,6 +166,8 @@ async function crawl(clientDoc) {
 
                 var pageUrl = new Url(nextPage)
                 var pathname = pageUrl.pathname
+
+                if (pathname == '') {pathname = '/' }
 
                 console.log("\t\t\tTHIS IS THE PATH NAME:" + pathname + ":")
 
