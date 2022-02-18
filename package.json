@@ -21,6 +21,6 @@
     "firebase": "^7.5.0",
     "node-cron": "^2.0.3",
     "request": "^2.88.0",
-    "url-parse": "^1.4.7"
+    "url-parse": "^1.5.6"
   }
 }
